@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>For My Mumma</title>
+
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap"
     rel="stylesheet">
@@ -16,164 +17,206 @@
       box-sizing: border-box;
     }
 
-    body {
-      min-height: 100vh;
-      overflow-x: hidden;
-      font-family: 'Poppins', sans-serif;
-      background: #fff4ef;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 18px;
-      color: #573d3d;
+    html {
+      scroll-behavior: smooth;
     }
 
-    body::before {
-      content: "";
+    body {
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      color: #513434;
+      background: #fff2ed;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .bg-photo {
       position: fixed;
       inset: 0;
-      background-image: url('background.jpg');
+      background-image: url("background.jpg");
       background-size: cover;
       background-position: center;
-      opacity: 0.16;
-      filter: blur(1.8px) saturate(1.05);
+      opacity: 0.22;
+      filter: blur(2px) saturate(1.05) brightness(1.03);
+      transform: scale(1.04);
+      z-index: -4;
+    }
+
+    .bg-glow {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.85), transparent 38%),
+        radial-gradient(circle at 90% 20%, rgba(255, 210, 205, 0.65), transparent 35%),
+        linear-gradient(135deg, rgba(255, 244, 239, 0.92), rgba(255, 230, 224, 0.88));
       z-index: -3;
     }
 
-    body::after {
-      content: "";
+    .open-screen {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.58), rgba(255, 228, 220, 0.9)),
-        linear-gradient(135deg, rgba(255, 244, 239, 0.94), rgba(255, 235, 228, 0.85));
-      z-index: -2;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.88), rgba(255, 229, 222, 0.94)),
+        linear-gradient(135deg, #fff7f3, #ffe6df);
+      transition: opacity 0.9s ease, visibility 0.9s ease;
     }
 
+    .open-screen.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .open-card {
+      width: min(92vw, 390px);
+      text-align: center;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 24px 70px rgba(110, 63, 63, 0.18);
+      border-radius: 32px;
+      padding: 34px 24px;
+      backdrop-filter: blur(12px);
+    }
+
+    .open-card .tiny {
+      font-size: 0.75rem;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: #9c6767;
+      margin-bottom: 12px;
+    }
+
+    .open-card h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.1rem;
+      color: #8a4242;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .open-card p {
+      font-size: 0.96rem;
+      line-height: 1.7;
+      color: #6b4a4a;
+      margin-bottom: 22px;
+    }
+
+    .open-card button,
+    .ending button {
+      border: none;
+      border-radius: 999px;
+      padding: 13px 24px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(135deg, #8f4c4c, #d58a79);
+      box-shadow: 0 14px 30px rgba(143, 76, 76, 0.25);
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .music-hint {
+      margin-top: 14px;
+      font-size: 0.72rem;
+      color: #9d7777;
+    }
+
+    .petal,
     .heart,
-    .flower,
-    .star {
+    .spark {
       position: fixed;
+      top: -40px;
       pointer-events: none;
-      z-index: -1;
-      opacity: 0.55;
-      animation: floatUp linear infinite;
+      z-index: 7;
+      animation: fall linear forwards;
+    }
+
+    .petal {
+      color: rgba(210, 98, 114, 0.72);
     }
 
     .heart {
-      color: rgba(214, 84, 103, 0.35);
-      font-size: 18px;
+      color: rgba(188, 62, 82, 0.66);
     }
 
-    .flower {
-      color: rgba(255, 164, 178, 0.42);
-      font-size: 20px;
+    .spark {
+      color: rgba(188, 133, 48, 0.72);
     }
 
-    .star {
-      color: rgba(207, 154, 71, 0.35);
-      font-size: 14px;
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(520deg);
+        opacity: 0;
+      }
     }
 
-    @keyframes floatUp {
+    .floating-note {
+      position: fixed;
+      z-index: 9;
+      background: rgba(255, 255, 255, 0.92);
+      color: #754f4f;
+      padding: 10px 14px;
+      border-radius: 999px;
+      box-shadow: 0 12px 28px rgba(98, 55, 55, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      font-size: 0.78rem;
+      white-space: nowrap;
+      animation: noteFloat 4.2s ease forwards;
+    }
+
+    @keyframes noteFloat {
       0% {
-        transform: translateY(110vh) rotate(0deg) scale(0.7);
+        transform: translateY(16px) scale(0.9);
         opacity: 0;
       }
 
-      15% {
-        opacity: 0.55;
+      18% {
+        opacity: 1;
       }
 
-      85% {
-        opacity: 0.45;
+      82% {
+        opacity: 1;
       }
 
       100% {
-        transform: translateY(-15vh) rotate(360deg) scale(1.1);
+        transform: translateY(-90px) scale(1);
         opacity: 0;
       }
     }
 
-    .phone-card {
-      width: 100%;
-      max-width: 430px;
-      min-height: 92vh;
-      background: rgba(255, 255, 255, 0.76);
-      backdrop-filter: blur(14px);
-      border-radius: 34px;
-      box-shadow: 0 24px 70px rgba(107, 58, 58, 0.16);
-      border: 1px solid rgba(255, 255, 255, 0.85);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .top-ribbon {
-      background: linear-gradient(90deg, #9b5a5a, #d18a7b, #9b5a5a);
-      color: white;
-      text-align: center;
-      padding: 10px 12px;
-      font-size: 0.76rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+    .page {
+      width: min(100%, 440px);
+      margin: 0 auto;
+      padding: 18px 16px 34px;
     }
 
     .hero {
-      padding: 24px 22px 10px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
       text-align: center;
+      gap: 18px;
+      padding: 20px 0;
+    }
+
+    .main-photo-card {
+      width: 90%;
+      background: rgba(255, 255, 255, 0.86);
+      border-radius: 26px;
+      padding: 10px 10px 38px;
       position: relative;
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 7px 14px;
-      background: rgba(255, 233, 228, 0.95);
-      color: #9a4c4c;
-      border-radius: 999px;
-      font-size: 0.77rem;
-      font-weight: 500;
-      box-shadow: 0 8px 20px rgba(120, 70, 70, 0.08);
-      margin-bottom: 12px;
-      animation: bounceTiny 2.8s infinite;
-    }
-
-    @keyframes bounceTiny {
-
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-4px);
-      }
-    }
-
-    h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 3.2rem;
-      color: #8a4242;
-      line-height: 1;
-      text-shadow: 0 8px 18px rgba(138, 66, 66, 0.12);
-      margin-bottom: 6px;
-    }
-
-    .subtitle {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.18rem;
-      color: #805555;
-      font-weight: 600;
-      margin-bottom: 18px;
-    }
-
-    .photo-wrap {
-      width: 86%;
-      margin: 0 auto 20px;
-      position: relative;
+      box-shadow: 0 26px 60px rgba(95, 55, 55, 0.18);
       transform: rotate(-1.2deg);
-      animation: photoSway 5s ease-in-out infinite;
+      animation: gentleSway 5.5s ease-in-out infinite;
     }
 
-    @keyframes photoSway {
+    @keyframes gentleSway {
 
       0%,
       100% {
@@ -181,244 +224,350 @@
       }
 
       50% {
-        transform: rotate(0.8deg) translateY(-5px);
+        transform: rotate(0.8deg) translateY(-7px);
       }
     }
 
-    .photo-frame {
-      background: white;
-      padding: 10px 10px 34px;
-      border-radius: 18px;
-      box-shadow: 0 18px 35px rgba(83, 45, 45, 0.16);
-      position: relative;
+    .main-photo-card::before {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 32px;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%) rotate(2deg);
+      background: rgba(255, 224, 150, 0.65);
+      border-radius: 5px;
+      box-shadow: 0 8px 18px rgba(80, 50, 30, 0.08);
     }
 
-    .photo-frame img {
+    .main-photo-card img {
       width: 100%;
       display: block;
-      border-radius: 13px;
+      border-radius: 20px;
       object-fit: cover;
     }
 
-    .caption {
+    .photo-caption {
       position: absolute;
-      bottom: 9px;
+      bottom: 12px;
       left: 0;
       right: 0;
       font-size: 0.76rem;
-      color: #8e6767;
-      font-weight: 500;
+      color: #8a6363;
+      letter-spacing: 0.2px;
     }
 
-    .tape {
-      position: absolute;
-      top: -12px;
-      left: 50%;
-      width: 92px;
-      height: 30px;
-      background: rgba(255, 232, 168, 0.65);
-      transform: translateX(-50%) rotate(2deg);
-      border-radius: 4px;
-      box-shadow: 0 5px 12px rgba(100, 70, 40, 0.08);
-    }
-
-    .message-card {
-      margin: 14px 20px 18px;
-      background: rgba(255, 250, 247, 0.88);
-      border-radius: 26px;
+    .title-block {
+      background: rgba(255, 255, 255, 0.62);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      border-radius: 30px;
       padding: 22px 20px;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.95), 0 12px 30px rgba(120, 70, 70, 0.08);
+      box-shadow: 0 20px 45px rgba(98, 55, 55, 0.11);
+      width: 100%;
+    }
+
+    .label {
+      font-size: 0.72rem;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: #9d6b6b;
+      margin-bottom: 8px;
+    }
+
+    .title-block h2 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.3rem;
+      color: #8a4242;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .title-block p {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.28rem;
+      color: #765151;
+      line-height: 1.35;
+    }
+
+    .scroll-text {
+      font-size: 0.76rem;
+      color: #9a7373;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 0.55;
+        transform: translateY(0);
+      }
+
+      50% {
+        opacity: 1;
+        transform: translateY(4px);
+      }
+    }
+
+    .letter {
+      margin-top: 8px;
+      background: rgba(255, 255, 255, 0.78);
+      border-radius: 34px;
+      box-shadow: 0 24px 60px rgba(98, 55, 55, 0.13);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      overflow: hidden;
+    }
+
+    .letter-top {
+      padding: 15px;
+      text-align: center;
+      background: linear-gradient(90deg, rgba(143, 76, 76, 0.94), rgba(213, 138, 121, 0.94));
+      color: white;
+      font-size: 0.78rem;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+    }
+
+    .letter-body {
+      padding: 30px 24px;
       position: relative;
     }
 
-    .message-card::before {
+    .letter-body::before {
       content: "“";
       position: absolute;
-      top: -18px;
+      top: -8px;
       left: 18px;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 5rem;
-      color: rgba(177, 102, 102, 0.14);
+      font-size: 5.6rem;
+      color: rgba(143, 76, 76, 0.13);
     }
 
-    .message {
-      font-size: 0.94rem;
-      line-height: 1.82;
-      color: #5d4646;
+    .letter-body p {
       position: relative;
       z-index: 2;
+      font-size: 0.98rem;
+      line-height: 1.9;
+      color: #5a4141;
+      margin-bottom: 18px;
     }
 
     .quote {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
+      line-height: 1.22;
       color: #8a4242;
       font-weight: 700;
-      margin-top: 18px;
-      line-height: 1.25;
-    }
-
-    .fun-strip {
-      margin: 0 20px 18px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .fun-box {
-      background: rgba(255, 255, 255, 0.74);
-      border-radius: 20px;
-      padding: 14px 12px;
-      text-align: left;
-      box-shadow: 0 8px 20px rgba(100, 55, 55, 0.06);
-      font-size: 0.78rem;
-      line-height: 1.55;
-      color: #6f5050;
-      min-height: 112px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.85);
-    }
-
-    .fun-box span {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      font-weight: 700;
-      color: #9b5a5a;
-      border-bottom: 1px solid rgba(155, 90, 90, 0.25);
-      padding-bottom: 3px;
-    }
-
-    .button-row {
-      padding: 0 20px 24px;
       text-align: center;
+      margin: 26px 0 12px;
     }
 
-    button {
-      border: none;
-      background: linear-gradient(135deg, #9b5a5a, #d18477);
-      color: white;
-      padding: 13px 20px;
-      border-radius: 999px;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 600;
-      box-shadow: 0 12px 24px rgba(155, 90, 90, 0.22);
-      cursor: pointer;
-      animation: glow 2.5s infinite;
+    .signoff {
+      text-align: right;
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.05rem;
+      color: #8a4242;
+      margin-top: 12px;
     }
 
-    @keyframes glow {
-
-      0%,
-      100% {
-        box-shadow: 0 12px 24px rgba(155, 90, 90, 0.2);
-      }
-
-      50% {
-        box-shadow: 0 14px 32px rgba(155, 90, 90, 0.32);
-      }
+    .ending {
+      margin-top: 22px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.66);
+      border: 1px solid rgba(255, 255, 255, 0.88);
+      border-radius: 30px;
+      padding: 24px 18px;
+      box-shadow: 0 18px 45px rgba(98, 55, 55, 0.1);
     }
 
-    .hidden-note {
-      display: none;
-      margin-top: 14px;
-      padding: 16px;
-      background: rgba(255, 239, 235, 0.9);
-      border-radius: 18px;
-      color: #704d4d;
-      font-size: 0.92rem;
+    .ending h3 {
+      font-family: 'Cormorant Garamond', serif;
+      color: #814d4d;
+      font-size: 1.45rem;
+      margin-bottom: 10px;
+    }
+
+    .ending p {
+      font-size: 0.86rem;
+      color: #725252;
       line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .joke-box {
+      display: none;
+      margin-top: 18px;
       text-align: left;
+      background: rgba(255, 246, 242, 0.92);
+      border-radius: 22px;
+      padding: 18px;
+      color: #674949;
+      font-size: 0.88rem;
+      line-height: 1.75;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+    }
+
+    .joke-box strong {
+      color: #8a4242;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.73rem;
+      color: #9a7474;
+      line-height: 1.6;
     }
 
     audio {
-      width: calc(100% - 40px);
-      margin: 0 20px 24px;
-      opacity: 0.85;
-    }
-
-    .tiny-footer {
-      text-align: center;
-      font-size: 0.72rem;
-      color: #9b7777;
-      padding: 0 18px 20px;
-      margin-top: -8px;
+      display: none;
     }
   </style>
 </head>
 
 <body>
-  <div class="heart" style="left:8%; animation-duration:11s; animation-delay:0s;">♥</div>
-  <div class="flower" style="left:22%; animation-duration:13s; animation-delay:2s;">✿</div>
-  <div class="star" style="left:38%; animation-duration:9s; animation-delay:1s;">✦</div>
-  <div class="heart" style="left:57%; animation-duration:12s; animation-delay:4s;">♥</div>
-  <div class="flower" style="left:76%; animation-duration:14s; animation-delay:3s;">✿</div>
-  <div class="star" style="left:90%; animation-duration:10s; animation-delay:5s;">✦</div>
+  <div class="bg-photo"></div>
+  <div class="bg-glow"></div>
 
-  <main class="phone-card">
-    <div class="top-ribbon">A tiny morning surprise for the best Mumma</div>
-
-    <section class="hero">
-      <div class="badge">Do not start working. This is a legally emotional notice.</div>
-      <h1>Happy Mother’s Day</h1>
-      <p class="subtitle">To my safest place, my prettiest heart.</p>
-
-      <div class="photo-wrap">
-        <div class="tape"></div>
-        <div class="photo-frame">
-          <img src="main-photo.jpg" alt="Mumma and me">
-          <div class="caption">my favourite person, forever</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="message-card">
-      <div class="message">
-        Mumma,<br><br>
-        Some of the happiest and safest parts of my life have always had you in them.<br><br>
-        You love quietly, care endlessly, and give so much of yourself to everyone around you — so naturally that people
-        forget how extraordinary you truly are.<br><br>
-        Thank you for being my comfort, my strength, and my forever home.
-      </div>
-
-      <div class="quote">
-        Home was never a place.<br>It was always you.
-      </div>
-    </section>
-
-    <section class="fun-strip">
-      <div class="fun-box">
-        <span>Morning update</span>
-        Today, please relax. I have promoted myself from “child” to “temporary responsible adult.”
-      </div>
-      <div class="fun-box">
-        <span>Kitchen notice</span>
-        Breakfast is being prepared. Kindly ignore any unusual sounds, smells, or confidence levels.
-      </div>
-    </section>
-
-    <div class="button-row">
-      <button onclick="showNote()">One tiny truth</button>
-      <div class="hidden-note" id="hiddenNote">
-        Thank you for finding everything I lose in the exact place you told me to check first. That is not normal human
-        skill. That is Mumma magic.
-      </div>
+  <div class="open-screen" id="openScreen">
+    <div class="open-card">
+      <div class="tiny">A morning surprise</div>
+      <h1>For Mumma</h1>
+      <p>Before today begins, this little page wants to say what I sometimes forget to say properly.</p>
+      <button onclick="openSurprise()">Open with love</button>
+      <div class="music-hint">Tap once and keep the volume soft.</div>
     </div>
+  </div>
 
-    <audio controls autoplay loop>
-      <source src="music.mp3" type="audio/mp3">
-    </audio>
+  <audio id="song" loop preload="auto">
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
 
-    <div class="tiny-footer">Made with love, panic, and full confidence that you’ll still ask if I ate properly.</div>
+  <main class="page">
+    <section class="hero">
+      <div class="main-photo-card">
+        <img src="main-photo.jpg" alt="Mumma and me">
+        <div class="photo-caption">my favourite place to feel safe</div>
+      </div>
+
+      <div class="title-block">
+        <div class="label">Happy Mother’s Day</div>
+        <h2>Mumma</h2>
+        <p>You are the warmth in every ordinary day.</p>
+      </div>
+
+      <div class="scroll-text">scroll slowly ↓</div>
+    </section>
+
+    <section class="letter">
+      <div class="letter-top">A small letter from my heart</div>
+
+      <div class="letter-body">
+        <p>Mumma,</p>
+
+        <p>Some of the happiest and safest parts of my life have always had you in them.</p>
+
+        <p>You love quietly, care endlessly, and give so much of yourself to everyone around you. You do it so naturally
+          that sometimes people forget how extraordinary you truly are.</p>
+
+        <p>You make home feel softer. You make hard days feel survivable. You make love feel simple, steady, and pure.
+        </p>
+
+        <p>Thank you for every meal, every prayer, every worry, every scolding, every sacrifice, every smile, and every
+          little thing you do even when nobody notices.</p>
+
+        <p>No matter how old I grow, a part of me will always feel safest beside you.</p>
+
+        <div class="quote">
+          Home was never a place.<br>
+          It was always you.
+        </div>
+
+        <p>I love you more than I can ever properly explain.</p>
+
+        <div class="signoff">Your baby</div>
+      </div>
+    </section>
+
+    <section class="ending">
+      <h3>One last thing...</h3>
+      <p>This part is not emotional. This is just a small report on your superpowers.</p>
+      <button onclick="showJokes()">Show Mumma Magic</button>
+
+      <div class="joke-box" id="jokeBox">
+        <p><strong>Superpower 1:</strong> Finding things in the exact place you already told me to check.</p>
+        <p><strong>Superpower 2:</strong> Knowing I am hungry before I know I am hungry.</p>
+        <p><strong>Superpower 3:</strong> Saying “do whatever you want” in a tone that clearly means “choose carefully.”
+        </p>
+        <p><strong>Superpower 4:</strong> Asking if I ate properly even when the world is ending.</p>
+      </div>
+    </section>
+
+    <div class="footer">
+      Made with love, nervousness, and full respect for your ability to notice every small detail.
+    </div>
   </main>
 
   <script>
-    function showNote() {
-      const note = document.getElementById('hiddenNote');
-      note.style.display = note.style.display === 'block' ? 'none' : 'block';
+    const notes = [
+      "Mumma magic detected",
+      "Breakfast team is trying its best",
+      "No house work allowed today",
+      "Queen of the house",
+      "Love level: unlimited",
+      "Warning: emotional child nearby"
+    ];
+
+    function openSurprise() {
+      document.getElementById('openScreen').classList.add('hide');
+
+      const song = document.getElementById('song');
+      song.volume = 0.55;
+      song.play();
+
+      burstConfetti();
+      setTimeout(makeFloatingNote, 500);
+      setTimeout(makeFloatingNote, 1400);
+      setTimeout(makeFloatingNote, 2300);
+    }
+
+    function burstConfetti() {
+      const symbols = ['♥', '✦', '✿', '♡'];
+
+      for (let i = 0; i < 48; i++) {
+        const piece = document.createElement('div');
+        const type = i % 3 === 0 ? 'heart' : i % 3 === 1 ? 'spark' : 'petal';
+        piece.className = type;
+        piece.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        piece.style.left = Math.random() * 100 + 'vw';
+        piece.style.fontSize = (14 + Math.random() * 18) + 'px';
+        piece.style.animationDuration = (3.2 + Math.random() * 3.6) + 's';
+        piece.style.animationDelay = (Math.random() * 0.7) + 's';
+        document.body.appendChild(piece);
+
+        setTimeout(() => piece.remove(), 7200);
+      }
+    }
+
+    function makeFloatingNote() {
+      const note = document.createElement('div');
+      note.className = 'floating-note';
+      note.textContent = notes[Math.floor(Math.random() * notes.length)];
+      note.style.left = (8 + Math.random() * 62) + 'vw';
+      note.style.top = (62 + Math.random() * 20) + 'vh';
+      document.body.appendChild(note);
+      setTimeout(() => note.remove(), 4500);
+    }
+
+    function showJokes() {
+      const box = document.getElementById('jokeBox');
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
+      burstConfetti();
+      makeFloatingNote();
     }
   </script>
 </body>
